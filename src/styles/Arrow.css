@@ -1,0 +1,9 @@
+.arrow {
+  position: absolute;
+}
+
+.arrow__line {
+  stroke: black;
+  stroke-width: 1;
+  fill: transparent;
+}
