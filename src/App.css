@@ -5,5 +5,9 @@
 }
 
 .app__header {
-  font-family: ;
+  text-align: left;
+  font-family: "Cormorant Garamond";
+  font-size: 18pt;
+  font-weight: bold;
+  padding: 9px 0 0 14px;
 }

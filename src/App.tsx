@@ -3,10 +3,8 @@ import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <div className="App__header">
-        SubjectFlow
-      </div>
+    <div className="app">
+      <header className="app__header">Subject Flow</header>
     </div>
   );
 }
