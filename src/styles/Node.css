@@ -1,0 +1,30 @@
+.node {
+    border-radius: 5px;
+    font-family: "Inter", sans-serif;
+    position: absolute;
+    left: 50%;
+    text-align: left;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    padding: 4px 5px 3px 5px;
+    width: 230px;
+}
+
+.node__title {
+    font-weight: normal;
+    font-size: 13pt;
+}
+
+.node__code {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 200;
+    font-size: 10pt;
+    position: relative;
+    top: -1px;
+}
+
+.node__type {
+    font-weight: lighter;
+    font-size: 10pt;
+    text-align: right;
+}
