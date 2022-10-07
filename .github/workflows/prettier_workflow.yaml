@@ -1,0 +1,11 @@
+name: Code Formatting
+on: [ pull_request ]
+jobs:
+  prettier:
+    name: Prettier check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: rutajdash/prettier-cli-action@v1.0.0
+        with:
+          config_path: ../../.prettierrc.yaml
