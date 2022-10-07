@@ -43,7 +43,7 @@ function Arrow(props: ArrowProps) {
     svgLineStart.y = diff.y + headRadius;
     svgLineEnd.y = headRadius;
     bottom = props.start.y;
-  } else bottom = props.end.y;
+  } else bottom = props.end.y - headRadius;
 
   const svgLineDiff: Point = {
     x: svgLineEnd.x - svgLineStart.x,
