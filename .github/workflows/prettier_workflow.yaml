@@ -10,6 +10,7 @@ jobs:
         id: prettier-run
         with:
           config_path: ./.prettierrc.yaml
+          file_pattern: '.'
 
       # This step only runs if prettier finds errors causing the previous step to fail
       # This steps lists the files where errors were found
