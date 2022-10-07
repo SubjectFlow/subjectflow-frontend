@@ -18,6 +18,7 @@ exports[`against arrow snapshots 1`] = `
     d="M 0 408 C 240 360, 160 56, 400 8"
   />
   <circle
+    className="arrow__head"
     cx={400}
     cy={8}
     r={8}
@@ -43,6 +44,7 @@ exports[`against arrow snapshots 2`] = `
     d="M 0 0 C 240 36, 160 264, 400 300"
   />
   <circle
+    className="arrow__head"
     cx={400}
     cy={300}
     r={8}
@@ -68,6 +70,7 @@ exports[`against arrow snapshots 3`] = `
     d="M 300 0 C 120 36, 180 264, 0 300"
   />
   <circle
+    className="arrow__head"
     cx={0}
     cy={300}
     r={8}
@@ -93,6 +96,7 @@ exports[`against arrow snapshots 4`] = `
     d="M 300 408 C 120 360, 180 56, 0 8"
   />
   <circle
+    className="arrow__head"
     cx={0}
     cy={8}
     r={8}
