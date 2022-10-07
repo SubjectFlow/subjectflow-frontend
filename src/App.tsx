@@ -10,6 +10,7 @@ function App() {
       <Node
         mainColour="#004369"
         accentColour="#EDEDED"
+        position={{ x: 400, y: 370 }}
         title="Artificial Intelligence"
         code="COMP30024"
         type="ELECTIVE SCIENCE"

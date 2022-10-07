@@ -2,10 +2,10 @@ import React from "react";
 import "../styles/Arrow.css";
 import { Point } from "../Types";
 
-const xCurveFactor = 0.2;
+const xCurveFactor = 0.3;
 const yCurveFactor = 0.06;
-const curveFactor1 = 1;
-const curveFactor2 = 1;
+const curveFactor1 = 2;
+const curveFactor2 = 2;
 const arrowHeadHeight = 12;
 const arrowHeadLength = 12;
 
