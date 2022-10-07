@@ -7,3 +7,7 @@
   stroke-width: 1;
   fill: transparent;
 }
+
+.arrow__head {
+  fill: black;
+}

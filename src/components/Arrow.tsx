@@ -6,8 +6,7 @@ const xCurveFactor = 0.3;
 const yCurveFactor = 0.06;
 const curveFactor1 = 2;
 const curveFactor2 = 2;
-const arrowHeadHeight = 12;
-const arrowHeadLength = 12;
+const headRadius = 8;
 
 type ArrowProps = {
   start: Point;
@@ -15,7 +14,7 @@ type ArrowProps = {
 };
 
 function Arrow(props: ArrowProps) {
-  let bottom, left, xHeadDiff;
+  let bottom, left;
 
   const diff: Point = {
     x: Math.abs(props.end.x - props.start.x),
@@ -28,23 +27,21 @@ function Arrow(props: ArrowProps) {
   };
 
   let svgLineEnd: Point = {
-    x: diff.x - arrowHeadLength,
+    x: diff.x,
     y: diff.y
   };
 
   if (props.start.x > props.end.x) {
     svgLineStart.x = diff.x;
-    svgLineEnd.x = arrowHeadLength;
+    svgLineEnd.x = 0;
     left = props.end.x;
-    xHeadDiff = -1 * arrowHeadLength;
   } else {
     left = props.start.x;
-    xHeadDiff = arrowHeadLength;
   }
 
   if (props.start.y <= props.end.y) {
-    svgLineStart.y = diff.y + arrowHeadHeight / 2;
-    svgLineEnd.y = arrowHeadHeight / 2;
+    svgLineStart.y = diff.y + headRadius;
+    svgLineEnd.y = headRadius;
     bottom = props.start.y;
   } else bottom = props.end.y;
 
@@ -57,7 +54,7 @@ function Arrow(props: ArrowProps) {
     <svg
       className="arrow"
       width={diff.x}
-      height={diff.y + arrowHeadHeight / 2}
+      height={diff.y + headRadius}
       xmlns="http://www.w3.org/2000/svg"
       style={{ bottom: bottom, left: left }}
     >
@@ -72,12 +69,11 @@ function Arrow(props: ArrowProps) {
           `${svgLineEnd.x} ${svgLineEnd.y}`
         }
       />
-      <polygon
-        points={
-          `${svgLineEnd.x + xHeadDiff},${svgLineEnd.y} ` +
-          `${svgLineEnd.x},${svgLineEnd.y + arrowHeadHeight / 2} ` +
-          `${svgLineEnd.x},${svgLineEnd.y - arrowHeadHeight / 2}`
-        }
+      <circle
+        className="arrow__head"
+        cx={svgLineEnd.x}
+        cy={svgLineEnd.y}
+        r={headRadius}
       />
     </svg>
   );
