@@ -14,7 +14,7 @@ function App() {
         code="COMP30024"
         type="ELECTIVE SCIENCE"
       />
-      <Arrow start={{ x: 400, y: 100 }} end={{ x: 50, y: 50 }} />
+      <Arrow start={{ x: 0, y: 0 }} end={{ x: 400, y: 400 }} />
     </div>
   );
 }

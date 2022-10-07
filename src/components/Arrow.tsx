@@ -44,7 +44,7 @@ function Arrow(props: ArrowProps) {
 
   if (props.start.y <= props.end.y) {
     svgLineStart.y = diff.y + arrowHeadHeight / 2;
-    svgLineEnd.y = 0;
+    svgLineEnd.y = arrowHeadHeight / 2;
     bottom = props.start.y;
   } else bottom = props.end.y;
 
