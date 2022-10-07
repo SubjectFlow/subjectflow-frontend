@@ -19,7 +19,7 @@ function Node(props: NodeProps) {
         backgroundColor: props.mainColour,
         color: props.accentColour,
         bottom: props.position.y,
-        left: props.position.x,
+        left: props.position.x
       }}
     >
       <div className="node__title">{props.title}</div>

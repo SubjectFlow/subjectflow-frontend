@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`node renders test title 1`] = `
+<div
+  className="node"
+  style={
+    Object {
+      "backgroundColor": "#004369",
+      "bottom": 370,
+      "color": "#EDEDED",
+      "left": 400,
+    }
+  }
+>
+  <div
+    className="node__title"
+  >
+    Artificial Intelligence
+  </div>
+  <div
+    className="node__code"
+  >
+    COMP30024
+  </div>
+  <div
+    className="node__type"
+  >
+    ELECTIVE SCIENCE
+  </div>
+</div>
+`;

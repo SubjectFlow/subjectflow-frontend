@@ -19,17 +19,17 @@ function Arrow(props: ArrowProps) {
 
   const diff: Point = {
     x: Math.abs(props.end.x - props.start.x),
-    y: Math.abs(props.end.y - props.start.y),
+    y: Math.abs(props.end.y - props.start.y)
   };
 
   let svgLineStart: Point = {
     x: 0,
-    y: 0,
+    y: 0
   };
 
   let svgLineEnd: Point = {
     x: diff.x - arrowHeadLength,
-    y: diff.y,
+    y: diff.y
   };
 
   if (props.start.x > props.end.x) {
@@ -50,7 +50,7 @@ function Arrow(props: ArrowProps) {
 
   const svgLineDiff: Point = {
     x: svgLineEnd.x - svgLineStart.x,
-    y: svgLineEnd.y - svgLineStart.y,
+    y: svgLineEnd.y - svgLineStart.y
   };
 
   return (

@@ -1,9 +1,9 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import renderer from "react-test-renderer";
 import Node from "../components/Node";
 
-test("renders learn react link", () => {
-  render(
+test("node renders test title", () => {
+  const component = renderer.create(
     <Node
       mainColour="#004369"
       accentColour="#EDEDED"
@@ -13,6 +13,7 @@ test("renders learn react link", () => {
       type="ELECTIVE SCIENCE"
     />
   );
-  const linkElement = screen.getByText(/Artificial Intelligence/i);
-  expect(linkElement).toBeInTheDocument();
+
+  let tree = component.toJSON();
+  expect(tree).toMatchSnapshot();
 });

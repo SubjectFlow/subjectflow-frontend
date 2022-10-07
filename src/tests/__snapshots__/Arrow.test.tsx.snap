@@ -1,0 +1,93 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`against arrow snapshots 1`] = `
+<svg
+  className="arrow"
+  height={406}
+  style={
+    Object {
+      "bottom": 0,
+      "left": 0,
+    }
+  }
+  width={400}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    className="arrow__line"
+    d="M 0 406 C 232.79999999999998 358, 155.20000000000002 54, 388 6"
+  />
+  <polygon
+    points="400,6 388,12 388,0"
+  />
+</svg>
+`;
+
+exports[`against arrow snapshots 2`] = `
+<svg
+  className="arrow"
+  height={306}
+  style={
+    Object {
+      "bottom": 100,
+      "left": 0,
+    }
+  }
+  width={400}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    className="arrow__line"
+    d="M 0 0 C 232.79999999999998 36, 155.20000000000002 264, 388 300"
+  />
+  <polygon
+    points="400,300 388,306 388,294"
+  />
+</svg>
+`;
+
+exports[`against arrow snapshots 3`] = `
+<svg
+  className="arrow"
+  height={306}
+  style={
+    Object {
+      "bottom": 100,
+      "left": 100,
+    }
+  }
+  width={300}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    className="arrow__line"
+    d="M 300 0 C 127.20000000000002 36, 184.79999999999998 264, 12 300"
+  />
+  <polygon
+    points="0,300 12,306 12,294"
+  />
+</svg>
+`;
+
+exports[`against arrow snapshots 4`] = `
+<svg
+  className="arrow"
+  height={406}
+  style={
+    Object {
+      "bottom": 0,
+      "left": 100,
+    }
+  }
+  width={300}
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <path
+    className="arrow__line"
+    d="M 300 406 C 127.20000000000002 358, 184.79999999999998 54, 12 6"
+  />
+  <polygon
+    points="0,6 12,12 12,0"
+  />
+</svg>
+`;
