@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
 import { Subject, Point, Major, isMajor } from "../Types";

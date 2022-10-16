@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from "react";
+import React, { useState } from "react";
 import { Tree, TreeProps } from "./Tree";
 import "../styles/Canvas.css";
 
@@ -101,12 +101,17 @@ function Canvas() {
     setDragging(false);
   };
 
+  const onMouseLeave = (e: React.MouseEvent) => {
+    setDragging(false);
+  };
+
   return (
     <div
       className="canvas"
       onMouseDown={(e) => onMouseDown(e)}
       onMouseMove={(e) => onMouseMove(e)}
       onMouseUp={(e) => onMouseUp(e)}
+      onMouseLeave={(e) => onMouseLeave(e)}
     >
       <Tree adjList={hardCodedTest.adjList} disp={disp} />
     </div>
