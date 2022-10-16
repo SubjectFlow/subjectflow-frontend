@@ -8,4 +8,22 @@ type Point = {
   y: number;
 };
 
-export type { Colour, Point };
+type Subject = {
+  id: string;
+  name: string;
+  code: string;
+  type: string;
+};
+
+type Major = {
+  id: string;
+  name: string;
+  course: string;
+};
+
+const isMajor = (node: Subject | Major): node is Major => {
+  return (node as Major).course !== undefined;
+};
+
+export type { Colour, Point, Subject, Major };
+export { isMajor };

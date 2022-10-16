@@ -1,3 +1,9 @@
+:root {
+  --node-width: 230px;
+  --node-height: 60px;
+  --node-height-major: 65px;
+}
+
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;

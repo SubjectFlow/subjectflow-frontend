@@ -14,7 +14,6 @@ exports[`node renders test title 1`] = `
 >
   <div
     className="node__title"
-    style={Object {}}
   >
     Artificial Intelligence
   </div>

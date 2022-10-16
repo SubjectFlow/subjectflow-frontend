@@ -1,21 +1,18 @@
 import React from "react";
 import "../styles/Node.css";
-import { Colour, Point } from "../Types";
+import { Colour, Major, Point, Subject, isMajor } from "../Types";
 
 type NodeProps = {
   mainColour: Colour;
   accentColour: Colour;
   position: Point;
-  title: string;
-  code?: string;
-  type: string;
-  major?: boolean;
+  content: Subject | Major;
 };
 
 function Node(props: NodeProps) {
   return (
     <div
-      className="node"
+      className={"node" + (isMajor(props.content) ? " node--major" : "")}
       style={{
         backgroundColor: props.mainColour,
         color: props.accentColour,
@@ -24,17 +21,18 @@ function Node(props: NodeProps) {
       }}
     >
       <div
-        className="node__title"
-        style={props.major ? { overflow: "visible", whiteSpace: "normal" } : {}}
+        className={
+          "node__title" + (isMajor(props.content) ? " node__title--major" : "")
+        }
       >
-        {props.title}
+        {props.content.name}
       </div>
-      {!props.major && (
-        <div className="node__code">
-          {props.major ? " " : props.code ? props.code : " "}
-        </div>
+      {!isMajor(props.content) && (
+        <div className="node__code">{props.content.code}</div>
       )}
-      <div className="node__type">{props.type}</div>
+      <div className="node__type">
+        {isMajor(props.content) ? props.content.course : props.content.type}
+      </div>
     </div>
   );
 }

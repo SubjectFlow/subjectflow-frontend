@@ -8,9 +8,12 @@ test("node renders test title", () => {
       mainColour="#004369"
       accentColour="#EDEDED"
       position={{ x: 400, y: 370 }}
-      title="Artificial Intelligence"
-      code="COMP30024"
-      type="ELECTIVE SCIENCE"
+      content={{
+        id: "a",
+        name: "Artificial Intelligence",
+        code: "COMP30024",
+        type: "ELECTIVE SCIENCE"
+      }}
     />
   );
 
