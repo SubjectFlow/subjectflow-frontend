@@ -11,11 +11,10 @@ export type EdgeList = {
 
 export type TreeProps = {
   adjList: EdgeList[];
+  disp: Point;
 };
 
 export function Tree(props: TreeProps) {
-  const [disp, setDisp] = useState({ x: 0, y: 0 });
-
   const getCSSVarDist = (name: string): number => {
     return parseInt(getComputedStyle(document.documentElement).getPropertyValue(name));
   };
@@ -29,7 +28,10 @@ export function Tree(props: TreeProps) {
         <React.Fragment key={elem.node.id}>
           <Node
             key={elem.node.id}
-            position={elem.position}
+            position={{
+              x: elem.position.x + props.disp.x,
+              y: elem.position.y + props.disp.y
+            }}
             mainColour="#004369"
             accentColour="#EDEDED"
             content={elem.node}
@@ -42,12 +44,12 @@ export function Tree(props: TreeProps) {
               <Arrow
                 key={props.adjList[to].node.id}
                 start={{
-                  x: elem.position.x + nodeWidth + disp.x,
-                  y: elem.position.y + heightOffset + disp.y
+                  x: elem.position.x + nodeWidth + props.disp.x,
+                  y: elem.position.y + heightOffset + props.disp.y
                 }}
                 end={{
-                  x: props.adjList[to].position.x + disp.x,
-                  y: props.adjList[to].position.y + heightOffset + disp.y
+                  x: props.adjList[to].position.x + props.disp.x,
+                  y: props.adjList[to].position.y + heightOffset + props.disp.y
                 }}
               />
             );
