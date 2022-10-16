@@ -13,18 +13,17 @@ exports[`node renders test title 1`] = `
   }
 >
   <div
-    className="node__title"
-    style={Object {}}
+    className="noselect node__title"
   >
     Artificial Intelligence
   </div>
   <div
-    className="node__code"
+    className="noselect node__code"
   >
     COMP30024
   </div>
   <div
-    className="node__type"
+    className="noselect node__type"
   >
     ELECTIVE SCIENCE
   </div>
