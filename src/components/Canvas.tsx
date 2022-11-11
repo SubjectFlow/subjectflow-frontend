@@ -111,7 +111,6 @@ function Canvas() {
       onMouseDown={(e) => onMouseDown(e)}
       onMouseMove={(e) => onMouseMove(e)}
       onMouseUp={(e) => onMouseUp(e)}
-      onMouseLeave={(e) => onMouseLeave(e)}
     >
       <Tree adjList={hardCodedTest.adjList} disp={disp} />
     </div>

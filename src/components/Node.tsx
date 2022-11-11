@@ -3,22 +3,30 @@ import "../styles/Node.css";
 import { Colour, Major, Point, Subject, isMajor } from "../Types";
 
 type NodeProps = {
+  onClick: (x: number) => void;
+  edgeListID: number;
   mainColour: Colour;
   accentColour: Colour;
   position: Point;
   content: Subject | Major;
+  faded: boolean;
 };
 
 function Node(props: NodeProps) {
   return (
     <div
-      className={"node" + (isMajor(props.content) ? " node--major" : "")}
+      className={
+        "node" +
+        (isMajor(props.content) ? " node--major" : "") +
+        (props.faded ? " node--faded" : "")
+      }
       style={{
         backgroundColor: props.mainColour,
         color: props.accentColour,
         bottom: props.position.y,
         left: props.position.x
       }}
+      onClick={() => props.onClick(props.edgeListID)}
     >
       <div
         className={
