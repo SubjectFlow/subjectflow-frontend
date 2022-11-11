@@ -10,15 +10,11 @@
   width: var(--node-width);
   height: var(--node-height);
   box-sizing: border-box;
-  transition: opacity 1s linear 0s;
+  transition: opacity 0.9s ease-in-out;
 }
 
 .node--major {
   height: var(--node-height-major);
-}
-
-.node--faded {
-  opacity: 20%;
 }
 
 .node__title {

@@ -18,7 +18,7 @@ function Node(props: NodeProps) {
       className={
         "node" +
         (isMajor(props.content) ? " node--major" : "") +
-        (props.faded ? " node--faded" : "")
+        (props.faded ? " --faded" : "")
       }
       style={{
         backgroundColor: props.mainColour,

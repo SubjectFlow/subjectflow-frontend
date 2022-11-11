@@ -11,6 +11,7 @@ const headRadius = 8;
 type ArrowProps = {
   start: Point;
   end: Point;
+  faded: boolean;
 };
 
 function Arrow(props: ArrowProps) {
@@ -52,7 +53,7 @@ function Arrow(props: ArrowProps) {
 
   return (
     <svg
-      className="arrow"
+      className={"arrow" + (props.faded ? " --faded" : "")}
       width={diff.x}
       height={diff.y + headRadius}
       xmlns="http://www.w3.org/2000/svg"

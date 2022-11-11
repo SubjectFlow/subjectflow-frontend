@@ -15,7 +15,8 @@ const hardCodedTest: TreeProps = {
         x: 130,
         y: 800
       },
-      edges: [4]
+      outgoingEdges: [4],
+      incomingEdges: []
     },
     {
       node: {
@@ -28,7 +29,8 @@ const hardCodedTest: TreeProps = {
         x: 100,
         y: 700
       },
-      edges: [4]
+      outgoingEdges: [4],
+      incomingEdges: []
     },
     {
       node: {
@@ -41,7 +43,8 @@ const hardCodedTest: TreeProps = {
         x: 100,
         y: 600
       },
-      edges: [4]
+      outgoingEdges: [4],
+      incomingEdges: []
     },
     {
       node: {
@@ -54,7 +57,8 @@ const hardCodedTest: TreeProps = {
         x: 130,
         y: 500
       },
-      edges: [4]
+      outgoingEdges: [4],
+      incomingEdges: []
     },
     {
       node: {
@@ -66,7 +70,8 @@ const hardCodedTest: TreeProps = {
         x: 600,
         y: 650
       },
-      edges: []
+      outgoingEdges: [],
+      incomingEdges: [0, 1, 2, 3]
     }
   ],
   disp: {
@@ -98,10 +103,6 @@ function Canvas() {
   };
 
   const onMouseUp = (e: React.MouseEvent) => {
-    setDragging(false);
-  };
-
-  const onMouseLeave = (e: React.MouseEvent) => {
     setDragging(false);
   };
 

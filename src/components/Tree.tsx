@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useState } from "react";
+import React, { useState } from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
 import { Subject, Point, Major, isMajor } from "../Types";
@@ -6,7 +6,8 @@ import { Subject, Point, Major, isMajor } from "../Types";
 export type EdgeList = {
   node: Subject | Major;
   position: Point;
-  edges: number[];
+  outgoingEdges: number[];
+  incomingEdges: number[];
 };
 
 export type TreeProps = {
@@ -25,8 +26,25 @@ export function Tree(props: TreeProps) {
   let majorNodeHeight = getCSSVarDist("--node-height-major");
   let nodeWidth = getCSSVarDist("--node-width");
 
+  const dfsVisibility = (idx: number, outgoing: boolean, visited: boolean[], newVisible: boolean[]) => {
+    if (visited[idx]) return;
+    visited[idx] = true;
+    newVisible[idx] = true;
+    console.log(newVisible);
+    if (outgoing) {
+      props.adjList[idx].outgoingEdges.forEach(x => dfsVisibility(x, true, visited, newVisible));
+    }
+    else {
+      props.adjList[idx].incomingEdges.forEach(x => dfsVisibility(x, false, visited, newVisible));
+    }
+  }
+
   const onNodeClick = (edgeListID: number) => {
-    setVisible(visible.map((elem, idx) => (idx === edgeListID ? true : false)));
+    let newVisible = Array(visible.length).fill(false);
+    dfsVisibility(edgeListID, true, Array(visible.length).fill(false), newVisible);
+    dfsVisibility(edgeListID, false, Array(visible.length).fill(false), newVisible);
+    setVisible(newVisible);
+    console.log(newVisible);
   };
 
   const renderNode = (elem: EdgeList, idx: number) => {
@@ -45,13 +63,14 @@ export function Tree(props: TreeProps) {
           accentColour="#EDEDED"
           content={elem.node}
         />
-        {elem.edges.map((to) => {
+        {elem.outgoingEdges.map((to) => {
           let heightOffset = isMajor(props.adjList[to].node)
             ? majorNodeHeight / 2
             : nodeHeight / 2;
           return (
             <Arrow
               key={props.adjList[to].node.id}
+              faded={!visible[idx] || !visible[to]}
               start={{
                 x: elem.position.x + nodeWidth + props.disp.x,
                 y: elem.position.y + heightOffset + props.disp.y

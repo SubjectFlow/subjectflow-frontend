@@ -1,5 +1,6 @@
 .arrow {
   position: absolute;
+  transition: opacity 0.9s ease-in-out;
 }
 
 .arrow__line {
