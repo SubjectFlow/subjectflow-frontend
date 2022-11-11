@@ -5,8 +5,11 @@ import Node from "../components/Node";
 test("node renders test title", () => {
   const component = renderer.create(
     <Node
+      onClick={(x: number) => {}}
+      faded={false}
       mainColour="#004369"
       accentColour="#EDEDED"
+      edgeListID={0}
       position={{ x: 400, y: 370 }}
       content={{
         id: "a",
