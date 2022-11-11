@@ -2,31 +2,28 @@ import React from "react";
 import renderer from "react-test-renderer";
 import Arrow from "../components/Arrow";
 
+const bottomLeft = { x: 0, y: 0 };
+const topRight = { x: 400, y: 400 };
+const topLeft = { x: 0, y: 400 };
+const bottomRight = { x: 400, y: 100 };
+
 test("against arrow snapshots", () => {
-  let component = renderer.create(
-    <Arrow start={{ x: 0, y: 0 }} end={{ x: 400, y: 400 }} />
-  );
+  let component = renderer.create(<Arrow start={bottomLeft} end={topRight} />);
 
   let tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 
-  component = renderer.create(
-    <Arrow start={{ x: 0, y: 400 }} end={{ x: 400, y: 100 }} />
-  );
+  component = renderer.create(<Arrow start={topLeft} end={bottomRight} />);
 
   tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 
-  component = renderer.create(
-    <Arrow start={{ x: 400, y: 400 }} end={{ x: 100, y: 100 }} />
-  );
+  component = renderer.create(<Arrow start={topLeft} end={bottomLeft} />);
 
   tree = component.toJSON();
   expect(tree).toMatchSnapshot();
 
-  component = renderer.create(
-    <Arrow start={{ x: 400, y: 0 }} end={{ x: 100, y: 400 }} />
-  );
+  component = renderer.create(<Arrow start={topRight} end={topLeft} />);
 
   tree = component.toJSON();
   expect(tree).toMatchSnapshot();
