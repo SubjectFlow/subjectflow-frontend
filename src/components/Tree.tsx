@@ -26,18 +26,26 @@ export function Tree(props: TreeProps) {
   let majorNodeHeight = getCSSVarDist("--node-height-major");
   let nodeWidth = getCSSVarDist("--node-width");
 
-  const dfsVisibility = (idx: number, outgoing: boolean, visited: boolean[], newVisible: boolean[]) => {
+  const dfsVisibility = (
+    idx: number,
+    outgoing: boolean,
+    visited: boolean[],
+    newVisible: boolean[]
+  ) => {
     if (visited[idx]) return;
     visited[idx] = true;
     newVisible[idx] = true;
     console.log(newVisible);
     if (outgoing) {
-      props.adjList[idx].outgoingEdges.forEach(x => dfsVisibility(x, true, visited, newVisible));
+      props.adjList[idx].outgoingEdges.forEach((x) =>
+        dfsVisibility(x, true, visited, newVisible)
+      );
+    } else {
+      props.adjList[idx].incomingEdges.forEach((x) =>
+        dfsVisibility(x, false, visited, newVisible)
+      );
     }
-    else {
-      props.adjList[idx].incomingEdges.forEach(x => dfsVisibility(x, false, visited, newVisible));
-    }
-  }
+  };
 
   const onNodeClick = (edgeListID: number) => {
     let newVisible = Array(visible.length).fill(false);

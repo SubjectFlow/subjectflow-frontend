@@ -12,11 +12,11 @@ const hardCodedTest: TreeProps = {
         type: "MAJOR CORE"
       },
       position: {
-        x: 130,
+        x: 530,
         y: 800
       },
       outgoingEdges: [4],
-      incomingEdges: []
+      incomingEdges: [5, 6]
     },
     {
       node: {
@@ -26,11 +26,11 @@ const hardCodedTest: TreeProps = {
         type: "MAJOR CORE"
       },
       position: {
-        x: 100,
+        x: 500,
         y: 700
       },
       outgoingEdges: [4],
-      incomingEdges: []
+      incomingEdges: [7]
     },
     {
       node: {
@@ -40,7 +40,7 @@ const hardCodedTest: TreeProps = {
         type: "MAJOR CORE"
       },
       position: {
-        x: 100,
+        x: 500,
         y: 600
       },
       outgoingEdges: [4],
@@ -54,7 +54,7 @@ const hardCodedTest: TreeProps = {
         type: "MAJOR CORE"
       },
       position: {
-        x: 130,
+        x: 530,
         y: 500
       },
       outgoingEdges: [4],
@@ -67,11 +67,53 @@ const hardCodedTest: TreeProps = {
         course: "BSCI"
       },
       position: {
-        x: 600,
+        x: 900,
         y: 650
       },
       outgoingEdges: [],
       incomingEdges: [0, 1, 2, 3]
+    },
+    {
+      node: {
+        id: "f",
+        name: "Algorithms and Data Structures",
+        code: "COMP20003",
+        type: "CORE PREREQ"
+      },
+      position: {
+        x: 150,
+        y: 900
+      },
+      outgoingEdges: [0],
+      incomingEdges: []
+    },
+    {
+      node: {
+        id: "g",
+        name: "Design of Algorithms",
+        code: "COMP20007",
+        type: "CORE PREREQ"
+      },
+      position: {
+        x: 150,
+        y: 800
+      },
+      outgoingEdges: [0],
+      incomingEdges: []
+    },
+    {
+      node: {
+        id: "h",
+        name: "Database Systems",
+        code: "INFO20003",
+        type: "CORE PREREQ"
+      },
+      position: {
+        x: 150,
+        y: 700
+      },
+      outgoingEdges: [1],
+      incomingEdges: []
     }
   ],
   disp: {
