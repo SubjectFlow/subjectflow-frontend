@@ -3,10 +3,10 @@
 exports[`against arrow snapshots 1`] = `
 <svg
   className="arrow"
-  height={408}
+  height={409}
   style={
     Object {
-      "bottom": 0,
+      "bottom": -1,
       "left": 0,
     }
   }
@@ -29,7 +29,7 @@ exports[`against arrow snapshots 1`] = `
 exports[`against arrow snapshots 2`] = `
 <svg
   className="arrow"
-  height={308}
+  height={309}
   style={
     Object {
       "bottom": 92,
@@ -41,12 +41,12 @@ exports[`against arrow snapshots 2`] = `
 >
   <path
     className="arrow__line"
-    d="M 0 0 C 240 36, 160 264, 400 300"
+    d="M 0 1 C 240 37, 160 265, 400 301"
   />
   <circle
     className="arrow__head"
     cx={400}
-    cy={300}
+    cy={301}
     r={8}
   />
 </svg>
@@ -55,24 +55,24 @@ exports[`against arrow snapshots 2`] = `
 exports[`against arrow snapshots 3`] = `
 <svg
   className="arrow"
-  height={408}
+  height={409}
   style={
     Object {
       "bottom": -8,
       "left": 0,
     }
   }
-  width={0}
+  width={8}
   xmlns="http://www.w3.org/2000/svg"
 >
   <path
     className="arrow__line"
-    d="M 0 0 C 0 48, 0 352, 0 400"
+    d="M 0 1 C 0 49, 0 353, 0 401"
   />
   <circle
     className="arrow__head"
     cx={0}
-    cy={400}
+    cy={401}
     r={8}
   />
 </svg>
@@ -81,10 +81,10 @@ exports[`against arrow snapshots 3`] = `
 exports[`against arrow snapshots 4`] = `
 <svg
   className="arrow"
-  height={8}
+  height={16}
   style={
     Object {
-      "bottom": 400,
+      "bottom": 392,
       "left": 0,
     }
   }

@@ -72,7 +72,10 @@ export function Tree(props: TreeProps) {
           content={elem.node}
         />
         {elem.outgoingEdges.map((to) => {
-          let heightOffset = isMajor(props.adjList[to].node)
+          let endHeightOffset = isMajor(props.adjList[to].node)
+            ? majorNodeHeight / 2
+            : nodeHeight / 2;
+          let startHeightOffset = isMajor(props.adjList[idx].node)
             ? majorNodeHeight / 2
             : nodeHeight / 2;
           return (
@@ -81,11 +84,11 @@ export function Tree(props: TreeProps) {
               faded={!visible[idx] || !visible[to]}
               start={{
                 x: elem.position.x + nodeWidth + props.disp.x,
-                y: elem.position.y + heightOffset + props.disp.y
+                y: elem.position.y + startHeightOffset + props.disp.y
               }}
               end={{
                 x: props.adjList[to].position.x + props.disp.x,
-                y: props.adjList[to].position.y + heightOffset + props.disp.y
+                y: props.adjList[to].position.y + endHeightOffset + props.disp.y
               }}
             />
           );
