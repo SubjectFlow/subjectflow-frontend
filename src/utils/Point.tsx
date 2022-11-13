@@ -1,50 +1,61 @@
-import { Point } from "../Types";
+class Point {
+  x: number;
+  y: number;
 
-const origin = { x: 0, y: 0 };
+  constructor(x: number, y: number) {
+    this.x = x;
+    this.y = y;
+  }
 
-function dist(p1: Point, p2: Point) {
-  let dx = p2.x - p1.x;
-  let dy = p2.y - p2.y;
-  return Math.sqrt(dx * dx + dy * dy);
+  distSq(p: Point) {
+    let dx = this.x - p.x;
+    let dy = this.y - p.y;
+    return dx * dx + dy * dy;
+  }
+
+  dist(p: Point) {
+    return Math.sqrt(this.distSq(p));
+  }
+
+  length() {
+    return this.dist(new Point(0, 0));
+  }
+
+  add(p: Point) {
+    return new Point(
+      this.x + p.x,
+      this.y + p.y
+    );
+  }
+
+  minus(p: Point) {
+    return new Point(
+      this.x - p.x,
+      this.y - p.y
+    );
+  }
+
+  mult(a: number) {
+    return new Point(
+      a * this.x,
+      a * this.y
+    );
+  }
+
+  flip() {
+    return new Point(
+      -this.x,
+      -this.y
+    );
+  }
+
+  normalise() {
+    let len = this.length();
+    return new Point (
+      this.x / len,
+      this.y / len
+    );
+  }
 }
 
-function length(p: Point) {
-  return dist(origin, p);
-}
-
-function distSq(p1: Point, p2: Point) {
-  let dx = p2.x - p1.x;
-  let dy = p2.y - p2.y;
-  return dx * dx + dy * dy;
-}
-
-function add(p1: Point, p2: Point) {
-  return {
-    x: p1.x + p2.x,
-    y: p1.y + p2.y
-  };
-}
-
-function flip(p: Point) {
-  return {
-    x: -p.x,
-    y: -p.y
-  };
-}
-
-function normalise(p: Point) {
-  let len = length(p);
-  return {
-    x: p.x / len,
-    y: p.y / len
-  };
-}
-
-export const PointUtils = {
-  distSq: distSq,
-  dist: dist,
-  add: add,
-  length: length,
-  flip: flip,
-  normalise: normalise
-};
+export { Point };

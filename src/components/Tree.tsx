@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
-import { Subject, Point, Major, isMajor } from "../Types";
+import { Point } from "../utils/Point";
+import { Subject, Major, isMajor } from "../Types";
 import { getCssVarInt } from "../utils/Css";
 
 export type EdgeList = {
@@ -58,10 +59,7 @@ export function Tree(props: TreeProps) {
           key={idx}
           faded={!visible[idx]}
           edgeListID={idx}
-          position={{
-            x: elem.position.x + props.disp.x,
-            y: elem.position.y + props.disp.y
-          }}
+          position={elem.position.add(props.disp)}
           mainColour="#004369"
           accentColour="#EDEDED"
           content={elem.node}
@@ -71,14 +69,14 @@ export function Tree(props: TreeProps) {
             <Arrow
               key={props.adjList[to].node.id}
               faded={!visible[idx] || !visible[to]}
-              start={{
-                x: elem.position.x + halfNodeWidth + props.disp.x,
-                y: elem.position.y + props.disp.y
-              }}
-              end={{
-                x: props.adjList[to].position.x + props.disp.x - halfNodeWidth,
-                y: props.adjList[to].position.y + props.disp.y
-              }}
+              start={new Point(
+                elem.position.x + halfNodeWidth + props.disp.x,
+                elem.position.y + props.disp.y
+              )}
+              end={new Point(
+                props.adjList[to].position.x + props.disp.x - halfNodeWidth,
+                props.adjList[to].position.y + props.disp.y
+          )}
             />
           );
         })}

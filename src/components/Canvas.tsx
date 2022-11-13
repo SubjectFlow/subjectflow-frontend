@@ -1,8 +1,10 @@
 import React, { useState } from "react";
-import { Tree, TreeProps } from "./Tree";
+import { Tree } from "./Tree";
+import { Point } from "../utils/Point";
 import "../styles/Canvas.css";
+import { nodeSystemProps, useNodeSystem } from "../hooks/useNodeSystem";
 
-const hardCodedTest: TreeProps = {
+const hardCodedAdjList: nodeSystemProps = {
   adjList: [
     {
       node: {
@@ -11,10 +13,10 @@ const hardCodedTest: TreeProps = {
         code: "COMP30026",
         type: "MAJOR CORE"
       },
-      position: {
-        x: 530,
-        y: 800
-      },
+      position: new Point(
+        530,
+        800
+      ),
       outgoingEdges: [4],
       incomingEdges: [5, 6]
     },
@@ -25,10 +27,10 @@ const hardCodedTest: TreeProps = {
         code: "COMP30022",
         type: "MAJOR CORE"
       },
-      position: {
-        x: 500,
-        y: 700
-      },
+      position: new Point(
+        500,
+        700
+      ),
       outgoingEdges: [4],
       incomingEdges: [7]
     },
@@ -39,10 +41,10 @@ const hardCodedTest: TreeProps = {
         code: "SWEN30006",
         type: "MAJOR CORE"
       },
-      position: {
-        x: 500,
-        y: 600
-      },
+      position: new Point(
+        500,
+        600
+      ),
       outgoingEdges: [4],
       incomingEdges: []
     },
@@ -53,10 +55,10 @@ const hardCodedTest: TreeProps = {
         code: "COMP30023",
         type: "MAJOR CORE"
       },
-      position: {
-        x: 530,
-        y: 500
-      },
+      position: new Point(
+        530,
+        500
+      ),
       outgoingEdges: [4],
       incomingEdges: []
     },
@@ -66,10 +68,10 @@ const hardCodedTest: TreeProps = {
         name: "Computing and Software Systems",
         course: "BSCI"
       },
-      position: {
-        x: 900,
-        y: 650
-      },
+      position: new Point(
+        900,
+        650
+      ),
       outgoingEdges: [],
       incomingEdges: [0, 1, 2, 3]
     },
@@ -80,10 +82,10 @@ const hardCodedTest: TreeProps = {
         code: "COMP20003",
         type: "CORE PREREQ"
       },
-      position: {
-        x: 150,
-        y: 900
-      },
+      position: new Point(
+        150,
+        900
+      ),
       outgoingEdges: [0],
       incomingEdges: []
     },
@@ -94,10 +96,10 @@ const hardCodedTest: TreeProps = {
         code: "COMP20007",
         type: "CORE PREREQ"
       },
-      position: {
-        x: 150,
-        y: 800
-      },
+      position: new Point(
+        150,
+        800
+      ),
       outgoingEdges: [0],
       incomingEdges: []
     },
@@ -108,40 +110,37 @@ const hardCodedTest: TreeProps = {
         code: "INFO20003",
         type: "CORE PREREQ"
       },
-      position: {
-        x: 150,
-        y: 700
-      },
+      position: new Point(
+        150,
+        700
+      ),
       outgoingEdges: [1],
       incomingEdges: []
     }
-  ],
-  disp: {
-    x: 0,
-    y: 0
-  }
+  ]
 };
 
 function Canvas() {
   const [dragging, setDragging] = useState(false);
-  const [disp, setDisp] = useState({ x: 0, y: 0 });
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [disp, setDisp] = useState(new Point(0, 0));
+  const [position, setPosition] = useState(new Point(0, 0));
+  const adjList = useNodeSystem(hardCodedAdjList);
 
   const onMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return;
-    setPosition({ x: e.clientX, y: e.clientY });
+    setPosition(new Point(e.clientX, e.clientY));
     setDragging(true);
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
     if (!dragging) return;
     setDisp((prevDisp) => {
-      return {
-        x: prevDisp.x + e.clientX - position.x,
-        y: prevDisp.y - e.clientY + position.y
-      };
+      return new Point(
+        prevDisp.x + e.clientX - position.x,
+        prevDisp.y - e.clientY + position.y
+    );
     });
-    setPosition({ x: e.clientX, y: e.clientY });
+    setPosition(new Point(e.clientX, e.clientY));
   };
 
   const onMouseUp = (e: React.MouseEvent) => {
@@ -155,7 +154,7 @@ function Canvas() {
       onMouseMove={(e) => onMouseMove(e)}
       onMouseUp={(e) => onMouseUp(e)}
     >
-      <Tree adjList={hardCodedTest.adjList} disp={disp} />
+      <Tree adjList={adjList} disp={disp} />
     </div>
   );
 }

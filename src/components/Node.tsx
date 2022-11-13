@@ -1,6 +1,7 @@
 import React from "react";
 import "../styles/Node.css";
-import { Colour, Major, Point, Subject, isMajor } from "../Types";
+import { Colour, Major, Subject, isMajor } from "../Types";
+import { Point } from "../utils/Point";
 import { getCssVarInt } from "../utils/Css";
 
 type NodeProps = {
