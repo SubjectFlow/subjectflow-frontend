@@ -13,10 +13,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP30026",
         type: "MAJOR CORE"
       },
-      position: new Point(
-        530,
-        800
-      ),
+      position: new Point(5230, 80),
       outgoingEdges: [4],
       incomingEdges: [5, 6]
     },
@@ -27,10 +24,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP30022",
         type: "MAJOR CORE"
       },
-      position: new Point(
-        500,
-        700
-      ),
+      position: new Point(50, 7030),
       outgoingEdges: [4],
       incomingEdges: [7]
     },
@@ -41,10 +35,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "SWEN30006",
         type: "MAJOR CORE"
       },
-      position: new Point(
-        500,
-        600
-      ),
+      position: new Point(500, 500),
       outgoingEdges: [4],
       incomingEdges: []
     },
@@ -55,10 +46,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP30023",
         type: "MAJOR CORE"
       },
-      position: new Point(
-        530,
-        500
-      ),
+      position: new Point(530, 500),
       outgoingEdges: [4],
       incomingEdges: []
     },
@@ -68,10 +56,7 @@ const hardCodedAdjList: nodeSystemProps = {
         name: "Computing and Software Systems",
         course: "BSCI"
       },
-      position: new Point(
-        900,
-        650
-      ),
+      position: new Point(900, 650),
       outgoingEdges: [],
       incomingEdges: [0, 1, 2, 3]
     },
@@ -82,10 +67,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP20003",
         type: "CORE PREREQ"
       },
-      position: new Point(
-        150,
-        900
-      ),
+      position: new Point(150, 900),
       outgoingEdges: [0],
       incomingEdges: []
     },
@@ -96,10 +78,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP20007",
         type: "CORE PREREQ"
       },
-      position: new Point(
-        150,
-        800
-      ),
+      position: new Point(150, 800),
       outgoingEdges: [0],
       incomingEdges: []
     },
@@ -110,10 +89,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "INFO20003",
         type: "CORE PREREQ"
       },
-      position: new Point(
-        150,
-        700
-      ),
+      position: new Point(150, 700),
       outgoingEdges: [1],
       incomingEdges: []
     }
@@ -138,7 +114,7 @@ function Canvas() {
       return new Point(
         prevDisp.x + e.clientX - position.x,
         prevDisp.y - e.clientY + position.y
-    );
+      );
     });
     setPosition(new Point(e.clientX, e.clientY));
   };

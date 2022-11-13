@@ -69,14 +69,18 @@ export function Tree(props: TreeProps) {
             <Arrow
               key={props.adjList[to].node.id}
               faded={!visible[idx] || !visible[to]}
-              start={new Point(
-                elem.position.x + halfNodeWidth + props.disp.x,
-                elem.position.y + props.disp.y
-              )}
-              end={new Point(
-                props.adjList[to].position.x + props.disp.x - halfNodeWidth,
-                props.adjList[to].position.y + props.disp.y
-          )}
+              start={
+                new Point(
+                  elem.position.x + halfNodeWidth + props.disp.x,
+                  elem.position.y + props.disp.y
+                )
+              }
+              end={
+                new Point(
+                  props.adjList[to].position.x + props.disp.x - halfNodeWidth,
+                  props.adjList[to].position.y + props.disp.y
+                )
+              }
             />
           );
         })}

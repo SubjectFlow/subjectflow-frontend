@@ -26,16 +26,10 @@ function Arrow(props: ArrowProps) {
   let width = diff.x;
 
   // Bottom left of svg in canvas coords
-  let botLeft: Point = new Point (
-    0,
-    props.start.y - 1
-  );
+  let botLeft: Point = new Point(0, props.start.y - 1);
 
   // Top right of svg in canvas coords
-  let topRight: Point = new Point (
-    0,
-    props.end.y + headRadius
-  );
+  let topRight: Point = new Point(0, props.end.y + headRadius);
 
   // Handle edge cases and different arrow directions
   if (diff.y < headRadius) {
@@ -60,10 +54,7 @@ function Arrow(props: ArrowProps) {
   }
 
   const toSvgCoords = (canvasCoord: Point, botLeft: Point, topRight: Point) => {
-    return new Point(
-      canvasCoord.x - botLeft.x,
-      topRight.y - canvasCoord.y
-    );
+    return new Point(canvasCoord.x - botLeft.x, topRight.y - canvasCoord.y);
   };
 
   const svgLineStart: Point = toSvgCoords(props.start, botLeft, topRight);

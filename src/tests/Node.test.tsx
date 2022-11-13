@@ -1,7 +1,7 @@
 import React from "react";
 import renderer from "react-test-renderer";
 import Node from "../components/Node";
-import { Point } from "../utils/Point"
+import { Point } from "../utils/Point";
 
 test("node renders test title", () => {
   const component = renderer.create(
