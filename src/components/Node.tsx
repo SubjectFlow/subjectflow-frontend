@@ -1,18 +1,25 @@
 import React from "react";
 import "../styles/Node.css";
 import { Colour, Major, Point, Subject, isMajor } from "../Types";
+import { getCssVarInt } from "../utils/Css";
 
 type NodeProps = {
   onClick: (x: number) => void;
   edgeListID: number;
   mainColour: Colour;
   accentColour: Colour;
-  position: Point;
+  position: Point; // Position of node centre
   content: Subject | Major;
   faded: boolean;
 };
 
 function Node(props: NodeProps) {
+  const nodeHeight = isMajor(props.content)
+    ? getCssVarInt("--node-height-major")
+    : getCssVarInt("--node-height");
+
+  const nodeWidth = getCssVarInt("--node-width");
+
   return (
     <div
       className={
@@ -23,8 +30,8 @@ function Node(props: NodeProps) {
       style={{
         backgroundColor: props.mainColour,
         color: props.accentColour,
-        bottom: props.position.y,
-        left: props.position.x
+        bottom: props.position.y - nodeHeight / 2,
+        left: props.position.x - nodeWidth / 2
       }}
       onClick={() => props.onClick(props.edgeListID)}
     >

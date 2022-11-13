@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
 import { Subject, Point, Major, isMajor } from "../Types";
+import { getCssVarInt } from "../utils/Css";
 
 export type EdgeList = {
   node: Subject | Major;
@@ -18,13 +19,7 @@ export type TreeProps = {
 export function Tree(props: TreeProps) {
   const [visible, setVisible] = useState(Array(props.adjList.length).fill(true));
 
-  const getCSSVarDist = (name: string): number => {
-    return parseInt(getComputedStyle(document.documentElement).getPropertyValue(name));
-  };
-
-  let nodeHeight = getCSSVarDist("--node-height");
-  let majorNodeHeight = getCSSVarDist("--node-height-major");
-  let nodeWidth = getCSSVarDist("--node-width");
+  let halfNodeWidth = getCssVarInt("--node-width") / 2;
 
   const dfsVisibility = (
     idx: number,
@@ -72,23 +67,17 @@ export function Tree(props: TreeProps) {
           content={elem.node}
         />
         {elem.outgoingEdges.map((to) => {
-          let endHeightOffset = isMajor(props.adjList[to].node)
-            ? majorNodeHeight / 2
-            : nodeHeight / 2;
-          let startHeightOffset = isMajor(props.adjList[idx].node)
-            ? majorNodeHeight / 2
-            : nodeHeight / 2;
           return (
             <Arrow
               key={props.adjList[to].node.id}
               faded={!visible[idx] || !visible[to]}
               start={{
-                x: elem.position.x + nodeWidth + props.disp.x,
-                y: elem.position.y + startHeightOffset + props.disp.y
+                x: elem.position.x + halfNodeWidth + props.disp.x,
+                y: elem.position.y + props.disp.y
               }}
               end={{
-                x: props.adjList[to].position.x + props.disp.x,
-                y: props.adjList[to].position.y + endHeightOffset + props.disp.y
+                x: props.adjList[to].position.x + props.disp.x - halfNodeWidth,
+                y: props.adjList[to].position.y + props.disp.y
               }}
             />
           );
