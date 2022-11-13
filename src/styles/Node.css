@@ -10,6 +10,7 @@
   width: var(--node-width);
   height: var(--node-height);
   box-sizing: border-box;
+  transition: opacity 0.9s ease-in-out;
 }
 
 .node--major {

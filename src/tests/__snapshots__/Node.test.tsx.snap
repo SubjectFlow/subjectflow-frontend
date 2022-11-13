@@ -3,6 +3,7 @@
 exports[`node renders test title 1`] = `
 <div
   className="node"
+  onClick={[Function]}
   style={
     Object {
       "backgroundColor": "#004369",
