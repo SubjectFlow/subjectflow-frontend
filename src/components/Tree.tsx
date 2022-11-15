@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
 import { Point } from "../utils/Point";
-import { Subject, Major, isMajor } from "../Types";
+import { Subject, Major } from "../Types";
 import { getCssVarInt } from "../utils/Css";
 
 export type EdgeList = {
@@ -31,7 +31,6 @@ export function Tree(props: TreeProps) {
     if (visited[idx]) return;
     visited[idx] = true;
     newVisible[idx] = true;
-    console.log(newVisible);
     if (outgoing) {
       props.adjList[idx].outgoingEdges.forEach((x) =>
         dfsVisibility(x, true, visited, newVisible)

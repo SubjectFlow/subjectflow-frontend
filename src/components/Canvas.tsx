@@ -13,7 +13,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP30026",
         type: "MAJOR CORE"
       },
-      position: new Point(5230, 80),
+      position: new Point(530, 800),
       outgoingEdges: [4],
       incomingEdges: [5, 6]
     },
@@ -24,7 +24,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP30022",
         type: "MAJOR CORE"
       },
-      position: new Point(50, 7030),
+      position: new Point(500, 700),
       outgoingEdges: [4],
       incomingEdges: [7]
     },
@@ -35,7 +35,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "SWEN30006",
         type: "MAJOR CORE"
       },
-      position: new Point(500, 500),
+      position: new Point(500, 600),
       outgoingEdges: [4],
       incomingEdges: []
     },
@@ -46,7 +46,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "COMP30023",
         type: "MAJOR CORE"
       },
-      position: new Point(530, 500),
+      position: new Point(530, 0),
       outgoingEdges: [4],
       incomingEdges: []
     },
@@ -89,7 +89,7 @@ const hardCodedAdjList: nodeSystemProps = {
         code: "INFO20003",
         type: "CORE PREREQ"
       },
-      position: new Point(150, 700),
+      position: new Point(-300, 700),
       outgoingEdges: [1],
       incomingEdges: []
     }
