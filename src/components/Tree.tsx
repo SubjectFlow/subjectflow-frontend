@@ -1,24 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
 import { Point } from "../utils/Point";
-import { Subject, Major } from "../Types";
 import { getCssVarInt } from "../utils/Css";
-
-export type EdgeList = {
-  node: Subject | Major;
-  position: Point;
-  outgoingEdges: number[];
-  incomingEdges: number[];
-};
+import { useNodeSystem, EdgeList } from "../hooks/useNodeSystem";
 
 export type TreeProps = {
-  adjList: EdgeList[];
   disp: Point;
 };
 
 export function Tree(props: TreeProps) {
-  const [visible, setVisible] = useState(Array(props.adjList.length).fill(true));
+  const [visible, setVisible] = useState<boolean[]>([]);
+  const { loaded, adjList } = useNodeSystem();
+
+  useEffect(() => {
+    if (loaded) {
+      setVisible(Array(adjList.length).fill(true));
+    }
+  }, [loaded, adjList.length]);
 
   let halfNodeWidth = getCssVarInt("--node-width") / 2;
 
@@ -32,11 +31,11 @@ export function Tree(props: TreeProps) {
     visited[idx] = true;
     newVisible[idx] = true;
     if (outgoing) {
-      props.adjList[idx].outgoingEdges.forEach((x) =>
+      adjList[idx].outgoingEdges.forEach((x) =>
         dfsVisibility(x, true, visited, newVisible)
       );
     } else {
-      props.adjList[idx].incomingEdges.forEach((x) =>
+      adjList[idx].incomingEdges.forEach((x) =>
         dfsVisibility(x, false, visited, newVisible)
       );
     }
@@ -66,7 +65,7 @@ export function Tree(props: TreeProps) {
         {elem.outgoingEdges.map((to) => {
           return (
             <Arrow
-              key={props.adjList[to].node.id}
+              key={adjList[to].node.id}
               faded={!visible[idx] || !visible[to]}
               start={
                 new Point(
@@ -76,8 +75,8 @@ export function Tree(props: TreeProps) {
               }
               end={
                 new Point(
-                  props.adjList[to].position.x + props.disp.x - halfNodeWidth,
-                  props.adjList[to].position.y + props.disp.y
+                  adjList[to].position.x + props.disp.x - halfNodeWidth,
+                  adjList[to].position.y + props.disp.y
                 )
               }
             />
@@ -87,5 +86,5 @@ export function Tree(props: TreeProps) {
     );
   };
 
-  return <>{props.adjList.map((elem, idx) => renderNode(elem, idx))}</>;
+  return <>{adjList.map((elem, idx) => renderNode(elem, idx))}</>;
 }
