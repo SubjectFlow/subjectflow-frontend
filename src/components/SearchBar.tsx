@@ -2,9 +2,12 @@ import React, { useState } from "react";
 import { EdgeList } from "../hooks/useNodeSystem";
 import "../styles/SearchBar.css";
 import { ReactComponent as SearchIcon } from "../icons/search.svg";
-import { isMajor, Major, Subject } from "../Types";
+import { Point } from "../utils/Point";
+import { isMajor } from "../Types";
 
-function SearchBar(props: { adjList: EdgeList[] }) {
+type searchBarProps = { adjList: EdgeList[]; onSearchClick: (x: Point) => void };
+
+function SearchBar(props: searchBarProps) {
   const [resultsVisible, setResultsVisible] = useState(false);
   const [text, setText] = useState("");
 
@@ -30,12 +33,24 @@ function SearchBar(props: { adjList: EdgeList[] }) {
         draggable={false}
       />
       <SearchIcon className="search-bar__icon" />
-      {resultsVisible && <ResultsPanel query={text} adjList={props.adjList} />}
+      {resultsVisible && (
+        <ResultsPanel
+          query={text}
+          adjList={props.adjList}
+          onSearchClick={props.onSearchClick}
+        />
+      )}
     </div>
   );
 }
 
-function ResultsPanel(props: { query: string; adjList: EdgeList[] }) {
+type resultsPanelProps = {
+  query: string;
+  adjList: EdgeList[];
+  onSearchClick: (x: Point) => void;
+};
+
+function ResultsPanel(props: resultsPanelProps) {
   const results = props.adjList.filter(
     (x) =>
       x.node.name.match(new RegExp(`${props.query}`, "i")) ||
@@ -43,21 +58,38 @@ function ResultsPanel(props: { query: string; adjList: EdgeList[] }) {
   );
   let jsx;
 
-  if (results.length !== 0) jsx = <>{results.map((x) => ResultEntry(x.node))}</>;
-  else jsx = <>{ResultEntry(null)}</>;
+  if (results.length !== 0)
+    jsx = (
+      <>
+        {results.map((x) =>
+          ResultEntry({ edgeList: x, onSearchClick: props.onSearchClick })
+        )}
+      </>
+    );
+  else jsx = <>{ResultEntry({ edgeList: null, onSearchClick: props.onSearchClick })}</>;
 
   return <div className="search-bar__results">{jsx}</div>;
 }
 
-function ResultEntry(content: Subject | Major | null) {
+type resultEntryProps = {
+  edgeList: EdgeList | null;
+  onSearchClick: (x: Point) => void;
+};
+
+function ResultEntry(props: resultEntryProps) {
   return (
-    <div className="search-bar__result">
+    <div
+      className="search-bar__result noselect"
+      onClick={() => {
+        if (props.edgeList) props.onSearchClick(props.edgeList.position);
+      }}
+    >
       <hr className="search-bar__result__break" />
       <span className="search-bar__result__title">
-        {content ? content.name : "No results"}
+        {props.edgeList ? props.edgeList.node.name : "No results"}
       </span>
       <br />
-      {content && !isMajor(content) && content.code}
+      {props.edgeList && !isMajor(props.edgeList.node) && props.edgeList.node.code}
     </div>
   );
 }

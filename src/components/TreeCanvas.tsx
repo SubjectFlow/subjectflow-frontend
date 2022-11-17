@@ -32,6 +32,12 @@ function TreeCanvas() {
     setDragging(false);
   };
 
+  const onSearchClick = (position: Point) => {
+    setDisp(
+      position.flip().add(new Point(window.innerWidth / 2, window.innerHeight / 2))
+    );
+  };
+
   return (
     <div
       className="tree-canvas"
@@ -39,7 +45,7 @@ function TreeCanvas() {
       onMouseMove={(e) => onMouseMove(e)}
       onMouseUp={(e) => onMouseUp(e)}
     >
-      {loaded && <SearchBar adjList={adjList} />}
+      {loaded && <SearchBar adjList={adjList} onSearchClick={onSearchClick} />}
       {loaded && <Tree disp={disp} adjList={adjList} />}
     </div>
   );
