@@ -135,8 +135,8 @@ function useNodeSystem() {
           .normalise()
           // .mult((0.0008 * (dist - NODE_FORCE_CONST)) * (0.0008 * (dist - NODE_FORCE_CONST)))
           .mult(-NODE_FORCE_CONST * (dist - NODE_FORCE_DIST))
-          // .mult(Math.exp(-0.07 * (dist - NODE_FORCE_DIST)) - 1);
-          // .mult(Math.log(-NODE_FORCE_CONST * (dist - NODE_FORCE_DIST) + 1))
+        // .mult(Math.exp(-0.07 * (dist - NODE_FORCE_DIST)) - 1);
+        // .mult(Math.log(-NODE_FORCE_CONST * (dist - NODE_FORCE_DIST) + 1))
       );
     } else return new Point(0, 0);
 
