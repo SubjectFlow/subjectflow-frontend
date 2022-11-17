@@ -1,6 +1,6 @@
 import React from "react";
 import "../styles/Arrow.css";
-import { Point } from "../Types";
+import { Point } from "../utils/Point";
 
 const xCurveFactor = 0.3;
 const yCurveFactor = 0.06;
@@ -16,26 +16,20 @@ type ArrowProps = {
 
 function Arrow(props: ArrowProps) {
   // Diff btwn start and end of arrow in canvas coords
-  const diff: Point = {
-    x: Math.abs(props.end.x - props.start.x),
-    y: Math.abs(props.end.y - props.start.y)
-  };
+  const diff = new Point(
+    Math.abs(props.end.x - props.start.x),
+    Math.abs(props.end.y - props.start.y)
+  );
 
   // height and width of svg
   let height = diff.y + headRadius + 1;
   let width = diff.x;
 
   // Bottom left of svg in canvas coords
-  let botLeft: Point = {
-    x: 0,
-    y: props.start.y - 1
-  };
+  let botLeft: Point = new Point(0, props.start.y - 1);
 
   // Top right of svg in canvas coords
-  let topRight: Point = {
-    x: 0,
-    y: props.end.y + headRadius
-  };
+  let topRight: Point = new Point(0, props.end.y + headRadius);
 
   // Handle edge cases and different arrow directions
   if (diff.y < headRadius) {
@@ -60,10 +54,7 @@ function Arrow(props: ArrowProps) {
   }
 
   const toSvgCoords = (canvasCoord: Point, botLeft: Point, topRight: Point) => {
-    return {
-      x: canvasCoord.x - botLeft.x,
-      y: topRight.y - canvasCoord.y
-    };
+    return new Point(canvasCoord.x - botLeft.x, topRight.y - canvasCoord.y);
   };
 
   const svgLineStart: Point = toSvgCoords(props.start, botLeft, topRight);
@@ -83,10 +74,7 @@ function Arrow(props: ArrowProps) {
   //   bottom = props.start.y;
   // } else bottom = props.end.y - headRadius;
 
-  const svgLineDiff: Point = {
-    x: svgLineEnd.x - svgLineStart.x,
-    y: svgLineEnd.y - svgLineStart.y
-  };
+  const svgLineDiff: Point = svgLineEnd.minus(svgLineStart);
 
   return (
     <svg

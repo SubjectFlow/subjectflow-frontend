@@ -1,30 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Node from "./Node";
 import Arrow from "./Arrow";
-import { Subject, Point, Major, isMajor } from "../Types";
-
-export type EdgeList = {
-  node: Subject | Major;
-  position: Point;
-  outgoingEdges: number[];
-  incomingEdges: number[];
-};
+import { Point } from "../utils/Point";
+import { getCssVarInt } from "../utils/Css";
+import { useNodeSystem, EdgeList } from "../hooks/useNodeSystem";
 
 export type TreeProps = {
-  adjList: EdgeList[];
   disp: Point;
 };
 
 export function Tree(props: TreeProps) {
-  const [visible, setVisible] = useState(Array(props.adjList.length).fill(true));
+  const [visible, setVisible] = useState<boolean[]>([]);
+  const { loaded, adjList } = useNodeSystem();
 
-  const getCSSVarDist = (name: string): number => {
-    return parseInt(getComputedStyle(document.documentElement).getPropertyValue(name));
-  };
+  useEffect(() => {
+    if (loaded) {
+      setVisible(Array(adjList.length).fill(true));
+    }
+  }, [loaded, adjList.length]);
 
-  let nodeHeight = getCSSVarDist("--node-height");
-  let majorNodeHeight = getCSSVarDist("--node-height-major");
-  let nodeWidth = getCSSVarDist("--node-width");
+  let halfNodeWidth = getCssVarInt("--node-width") / 2;
 
   const dfsVisibility = (
     idx: number,
@@ -35,13 +30,12 @@ export function Tree(props: TreeProps) {
     if (visited[idx]) return;
     visited[idx] = true;
     newVisible[idx] = true;
-    console.log(newVisible);
     if (outgoing) {
-      props.adjList[idx].outgoingEdges.forEach((x) =>
+      adjList[idx].outgoingEdges.forEach((x) =>
         dfsVisibility(x, true, visited, newVisible)
       );
     } else {
-      props.adjList[idx].incomingEdges.forEach((x) =>
+      adjList[idx].incomingEdges.forEach((x) =>
         dfsVisibility(x, false, visited, newVisible)
       );
     }
@@ -63,33 +57,28 @@ export function Tree(props: TreeProps) {
           key={idx}
           faded={!visible[idx]}
           edgeListID={idx}
-          position={{
-            x: elem.position.x + props.disp.x,
-            y: elem.position.y + props.disp.y
-          }}
+          position={elem.position.add(props.disp)}
           mainColour="#004369"
           accentColour="#EDEDED"
           content={elem.node}
         />
         {elem.outgoingEdges.map((to) => {
-          let endHeightOffset = isMajor(props.adjList[to].node)
-            ? majorNodeHeight / 2
-            : nodeHeight / 2;
-          let startHeightOffset = isMajor(props.adjList[idx].node)
-            ? majorNodeHeight / 2
-            : nodeHeight / 2;
           return (
             <Arrow
-              key={props.adjList[to].node.id}
+              key={adjList[to].node.id}
               faded={!visible[idx] || !visible[to]}
-              start={{
-                x: elem.position.x + nodeWidth + props.disp.x,
-                y: elem.position.y + startHeightOffset + props.disp.y
-              }}
-              end={{
-                x: props.adjList[to].position.x + props.disp.x,
-                y: props.adjList[to].position.y + endHeightOffset + props.disp.y
-              }}
+              start={
+                new Point(
+                  elem.position.x + halfNodeWidth + props.disp.x,
+                  elem.position.y + props.disp.y
+                )
+              }
+              end={
+                new Point(
+                  adjList[to].position.x + props.disp.x - halfNodeWidth,
+                  adjList[to].position.y + props.disp.y
+                )
+              }
             />
           );
         })}
@@ -97,5 +86,5 @@ export function Tree(props: TreeProps) {
     );
   };
 
-  return <>{props.adjList.map((elem, idx) => renderNode(elem, idx))}</>;
+  return <>{adjList.map((elem, idx) => renderNode(elem, idx))}</>;
 }

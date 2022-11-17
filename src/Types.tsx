@@ -3,10 +3,6 @@ type RGBA = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HEX = `#${string}`;
 
 type Colour = RGB | RGBA | HEX;
-type Point = {
-  x: number;
-  y: number;
-};
 
 type Subject = {
   id: string;
@@ -25,5 +21,5 @@ const isMajor = (node: Subject | Major): node is Major => {
   return (node as Major).course !== undefined;
 };
 
-export type { Colour, Point, Subject, Major };
+export type { Colour, Subject, Major };
 export { isMajor };
