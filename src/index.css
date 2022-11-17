@@ -2,6 +2,7 @@
   --node-width: 230px;
   --node-height: 60px;
   --node-height-major: 65px;
+  --grey-1: grey;
 }
 
 body {

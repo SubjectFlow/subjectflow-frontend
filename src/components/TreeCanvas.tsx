@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Tree } from "./Tree";
 import { Point } from "../utils/Point";
-import "../styles/Canvas.css";
+import "../styles/TreeCanvas.css";
 import { useNodeSystem } from "../hooks/useNodeSystem";
+import { SearchBar } from "./SearchBar";
 
 function TreeCanvas() {
   const [dragging, setDragging] = useState(false);
@@ -33,11 +34,12 @@ function TreeCanvas() {
 
   return (
     <div
-      className="canvas"
+      className="tree-canvas"
       onMouseDown={(e) => onMouseDown(e)}
       onMouseMove={(e) => onMouseMove(e)}
       onMouseUp={(e) => onMouseUp(e)}
     >
+      {loaded && <SearchBar adjList={adjList} />}
       {loaded && <Tree disp={disp} adjList={adjList} />}
     </div>
   );
