@@ -25,14 +25,17 @@ function useNodeSystem() {
   const DAMPING_CONST = 1;
   const ARROW_NATURAL_LENGTH = 150;
   const SIM_SPEED = 15;
-  const NODE_FORCE_CONST = 5000;
+  const NODE_FORCE_CONST = 0.5;
   const NODE_FORCE_DIST = 70;
-  const LEFT_CORRECTION_DIST = 50;
+  const LEFT_CORRECTION_DIST = 80;
   const LEFT_CORRECTION_CONST = 0.1;
   const MAX_LEFT_CORRECTION = 50;
+
   const halfNodeWidth = getCssVarInt("--node-width") / 2;
   const halfNodeHeight = getCssVarInt("--node-height") / 2;
   const halfMajorNodeHeight = getCssVarInt("--node-height-major") / 2;
+  const mCorner = halfNodeHeight / halfNodeWidth;
+  const mCornerMajor = halfMajorNodeHeight / halfNodeWidth;
 
   useEffect(() => {
     const newAdjList = hardCodedAdjList.map((x) => {
@@ -122,130 +125,7 @@ function useNodeSystem() {
   }
 
   function calcNodeForce(p1: Point, p2: Point, major1: boolean, major2: boolean) {
-    let halfNode1Height = major1 ? halfMajorNodeHeight : halfNodeHeight;
-    let halfNode2Height = major2 ? halfMajorNodeHeight : halfNodeHeight;
-
-    let dist;
-
-    if (p2.x - p1.x !== 0) {
-      let m = (p2.y - p1.y) / (p2.x - p1.x);
-
-      if (m === 0) {
-        dist = p1.dist(p2) - 2 * halfNodeWidth;
-      } else {
-        let c = p1.y - m * p1.x;
-        let p1int;
-        let p2int;
-
-        if (m > 0) {
-          if (p2.x > p1.x) {
-            if (p1.y + m * halfNodeWidth < p1.y + halfNode1Height) {
-              p1int = new Point(p1.x + halfNodeWidth, p1.y + m * halfNodeWidth);
-            } else {
-              p1int = new Point(p1.x + halfNode1Height / m, p1.y + halfNode1Height);
-            }
-            if (m * (p2.x - halfNodeWidth) + c > p2.y - halfNode2Height) {
-              p2int = new Point(p2.x - halfNodeWidth, m * (p2.x - halfNodeWidth) + c);
-            } else {
-              p2int = new Point(
-                (p2.y - halfNode2Height - c) / m,
-                p2.y - halfNode2Height
-              );
-            }
-          } else {
-            if (p1.y - m * halfNodeWidth > p1.y - halfNode1Height) {
-              p1int = new Point(p1.x - halfNodeWidth, p1.y - m * halfNodeWidth);
-            } else {
-              p1int = new Point(p1.x - halfNode1Height / m, p1.y - halfNode1Height);
-            }
-            if (m * (p2.x + halfNodeWidth) + c < p2.y + halfNode2Height) {
-              p2int = new Point(p2.x + halfNodeWidth, m * (p2.x + halfNodeWidth) + c);
-            } else {
-              p2int = new Point(
-                (p2.y + halfNode2Height - c) / m,
-                p2.y + halfNode2Height
-              );
-            }
-          }
-        } else {
-          if (p2.x > p1.x) {
-            if (p1.y + m * halfNodeWidth > p1.y - halfNode1Height) {
-              p1int = new Point(p1.x + halfNodeWidth, p1.y + m * halfNodeWidth);
-            } else {
-              p1int = new Point(p1.x - halfNode1Height / m, p1.y - halfNode1Height);
-            }
-            if (m * (p2.x - halfNodeWidth) + c < p2.y + halfNode2Height) {
-              p2int = new Point(p2.x - halfNodeWidth, m * (p2.x - halfNodeWidth) + c);
-            } else {
-              p2int = new Point(
-                (p2.y + halfNode2Height - c) / m,
-                p2.y + halfNode2Height
-              );
-            }
-          } else {
-            if (p1.y - m * halfNodeWidth < p1.y + halfNode1Height) {
-              p1int = new Point(p1.x - halfNodeWidth, p1.y - m * halfNodeWidth);
-            } else {
-              p1int = new Point(p1.x + halfNode1Height / m, p1.y + halfNode1Height);
-            }
-            if (m * (p2.x + halfNodeWidth) + c > p2.y - halfNode2Height) {
-              p2int = new Point(p2.x + halfNodeWidth, m * (p2.x + halfNodeWidth) + c);
-            } else {
-              p2int = new Point(
-                (p2.y - halfNode2Height - c) / m,
-                p2.y - halfNode2Height
-              );
-            }
-          }
-        }
-
-        dist = p1int.dist(p2int);
-        let yOverlap = false;
-        let xOverlap = false;
-        if (
-          p1.y + halfNode1Height >= p2.y - halfNode2Height &&
-          p1.y + halfNode1Height <= p2.y + halfNode2Height
-        ) {
-          yOverlap = true;
-        } else if (
-          p1.y - halfNode1Height >= p2.y - halfNode2Height &&
-          p1.y - halfNode1Height <= p2.y + halfNode2Height
-        ) {
-          yOverlap = true;
-        }
-
-        if (
-          p1.x - halfNodeWidth <= p2.x + halfNodeWidth &&
-          p1.x - halfNodeWidth >= p2.x - halfNodeWidth
-        ) {
-          xOverlap = true;
-        } else if (
-          p1.x + halfNodeWidth <= p2.x + halfNodeWidth &&
-          p1.x + halfNodeWidth >= p2.x - halfNodeWidth
-        ) {
-          xOverlap = true;
-        }
-
-        if (yOverlap && xOverlap) {
-          dist *= -1;
-        }
-      }
-    } else {
-      let top1 = p1.y + halfNode1Height;
-      let top2 = p2.y + halfNode2Height;
-      let bot1 = p1.y - halfNode1Height;
-      let bot2 = p2.y - halfNode2Height;
-
-      if (top1 >= bot2) {
-        if (top1 <= top2) {
-          dist = top1 - bot2;
-        } else {
-          dist = bot1 - top2;
-        }
-      } else {
-        dist = bot2 - top1;
-      }
-    }
+    let dist = calcNodeEdgeDist(p1, p2, major1, major2);
 
     if (dist < NODE_FORCE_DIST) {
       console.log(Math.exp(-0.1 * (dist - NODE_FORCE_DIST)) - 1);
@@ -254,13 +134,39 @@ function useNodeSystem() {
           .minus(p2)
           .normalise()
           // .mult((0.0008 * (dist - NODE_FORCE_CONST)) * (0.0008 * (dist - NODE_FORCE_CONST)))
-          // .mult(-0.5 * (dist - NODE_FORCE_DIST))
+          .mult(-NODE_FORCE_CONST * (dist - NODE_FORCE_DIST))
           // .mult(Math.exp(-0.07 * (dist - NODE_FORCE_DIST)) - 1);
-          .mult(Math.log(-NODE_FORCE_CONST * (dist - NODE_FORCE_DIST) + 1))
+          // .mult(Math.log(-NODE_FORCE_CONST * (dist - NODE_FORCE_DIST) + 1))
       );
     } else return new Point(0, 0);
 
     // return p1.minus(p2).normalise().mult(NODE_FORCE_CONST).div(p1.distSq(p2));
+  }
+
+  function calcNodeEdgeDist(p1: Point, p2: Point, major1: boolean, major2: boolean) {
+    let centreDist = p1.dist(p2);
+    let m = Math.abs((p2.y - p1.y) / (p2.x - p1.x));
+    let halfHeight1 = major1 ? halfMajorNodeHeight : halfNodeHeight;
+    let halfHeight2 = major2 ? halfMajorNodeHeight : halfNodeHeight;
+
+    if (m === Infinity) {
+      return centreDist - halfHeight1 - halfHeight2;
+    } else if (isNaN(m) || m === 0) {
+      return centreDist - 2 * halfNodeWidth;
+    } else {
+      let mCorner1 = major1 ? mCornerMajor : mCorner;
+      let mCorner2 = major2 ? mCornerMajor : mCorner;
+      let centreToEdge1 =
+        m >= mCorner1
+          ? Math.sqrt(halfHeight1 * halfHeight1 + (halfHeight1 / m) * (halfHeight1 / m))
+          : Math.sqrt(halfNodeWidth * halfNodeWidth * (1 + m * m));
+      let centreToEdge2 =
+        m >= mCorner2
+          ? Math.sqrt(halfHeight2 * halfHeight2 + (halfHeight2 / m) * (halfHeight2 / m))
+          : Math.sqrt(halfNodeWidth * halfNodeWidth * (1 + m * m));
+
+      return centreDist - centreToEdge1 - centreToEdge2;
+    }
   }
 
   function calcNodeForces() {
