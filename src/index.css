@@ -2,12 +2,14 @@
   --node-width: 230px;
   --node-height: 60px;
   --node-height-major: 65px;
+  --grey-1: grey;
 }
 
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-family: "Inter";
   height: 100%;
 }
 

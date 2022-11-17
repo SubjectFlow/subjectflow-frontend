@@ -1,5 +1,7 @@
-.canvas {
+.tree-canvas {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   top: 0;
   height: 100%;
   width: 100%;

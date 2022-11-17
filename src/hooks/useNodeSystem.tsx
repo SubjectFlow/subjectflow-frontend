@@ -128,7 +128,6 @@ function useNodeSystem() {
     let dist = calcNodeEdgeDist(p1, p2, major1, major2);
 
     if (dist < NODE_FORCE_DIST) {
-      console.log(Math.exp(-0.1 * (dist - NODE_FORCE_DIST)) - 1);
       return (
         p1
           .minus(p2)

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Tree } from "./Tree";
 import { Point } from "../utils/Point";
-import "../styles/Canvas.css";
+import "../styles/TreeCanvas.css";
+import { useNodeSystem } from "../hooks/useNodeSystem";
+import { SearchBar } from "./SearchBar";
 
-function Canvas() {
+function TreeCanvas() {
   const [dragging, setDragging] = useState(false);
   const [disp, setDisp] = useState(new Point(0, 0));
   const [position, setPosition] = useState(new Point(0, 0));
+  const { loaded, adjList } = useNodeSystem();
 
   const onMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return;
@@ -29,16 +32,23 @@ function Canvas() {
     setDragging(false);
   };
 
+  const onSearchClick = (position: Point) => {
+    setDisp(
+      position.flip().add(new Point(window.innerWidth / 2, window.innerHeight / 2))
+    );
+  };
+
   return (
     <div
-      className="canvas"
+      className="tree-canvas"
       onMouseDown={(e) => onMouseDown(e)}
       onMouseMove={(e) => onMouseMove(e)}
       onMouseUp={(e) => onMouseUp(e)}
     >
-      <Tree disp={disp} />
+      {loaded && <SearchBar adjList={adjList} onSearchClick={onSearchClick} />}
+      {loaded && <Tree disp={disp} adjList={adjList} />}
     </div>
   );
 }
 
-export default Canvas;
+export default TreeCanvas;

@@ -1,12 +1,12 @@
 import React from "react";
 import "./App.css";
-import Canvas from "./components/Canvas";
+import TreeCanvas from "./components/TreeCanvas";
 
 function App() {
   return (
     <div className="app">
       <header className="noselect app__header">Subject Flow</header>
-      <Canvas />
+      <TreeCanvas />
     </div>
   );
 }
