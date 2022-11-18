@@ -110,7 +110,7 @@ function ResultEntry(props: resultEntryProps) {
         if (props.searchInfo) props.onSearchClick(props.searchInfo.edgeList.position);
       }}
     >
-      <hr className="search-bar__result__break" />
+      {/* <hr className="search-bar__result__break" /> */}
       <span className="search-bar__result__title">
         {props.searchInfo ? (
           props.searchInfo.nameIdx !== -1 ? (

@@ -49,8 +49,12 @@
 .search-bar__result {
   text-align: left;
   font-size: var(--search-input-font-size);
-  padding: 0 var(--search-input-right-padding) 8px var(--search-input-right-padding);
+  padding: 8px var(--search-input-right-padding) 8px var(--search-input-right-padding);
   background-color: white;
+}
+
+.search-bar__result:hover {
+  background-color: var(--grey-2);
 }
 
 .search-bar__result__break {
