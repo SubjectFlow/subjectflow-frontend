@@ -60,7 +60,7 @@ function ResultsPanel(props: resultsPanelProps) {
       codeSearch = x.node.code.search(new RegExp(`${props.query}`, "i"));
     }
 
-    if (nameSearch !== -1 || codeSearch === -1)
+    if (nameSearch !== -1 || codeSearch !== -1)
       results.push({
         edgeList: x,
         nameIdx: nameSearch,
