@@ -18,6 +18,7 @@
 
 .search-bar--results-active {
   border-radius: var(--search-rounding) var(--search-rounding) 0 0;
+  z-index: 2;
 }
 
 .search-bar__input {
@@ -57,6 +58,11 @@
   border: none;
   background-color: var(--grey-1);
   height: 1px;
+}
+
+.search-bar__result__title {
+  font-size: calc(var(--search-input-font-size) + 0.1rem);
+  font-weight: 500;
 }
 
 .search-bar__icon {
