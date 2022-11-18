@@ -39,7 +39,7 @@ class Point {
 
   div(a: number) {
     if (a === 0) {
-      return;
+      return null;
     }
 
     return new Point(this.x / a, this.y / a);

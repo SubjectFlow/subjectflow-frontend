@@ -51,29 +51,55 @@ type resultsPanelProps = {
 };
 
 function ResultsPanel(props: resultsPanelProps) {
-  const results = props.adjList.filter(
-    (x) =>
-      x.node.name.match(new RegExp(`${props.query}`, "i")) ||
-      (!isMajor(x.node) && x.node.code.match(new RegExp(`${props.query}`, "i")))
-  );
+  const results: { edgeList: EdgeList; nameIdx: number; codeIdx: number }[] = [];
+
+  props.adjList.forEach((x) => {
+    let nameSearch = x.node.name.search(new RegExp(`${props.query}`, "i"));
+    let codeSearch = -1;
+    if (!isMajor(x.node)) {
+      codeSearch = x.node.code.search(new RegExp(`${props.query}`, "i"));
+    }
+
+    if (nameSearch !== -1 && codeSearch === -1)
+      results.push({
+        edgeList: x,
+        nameIdx: nameSearch,
+        codeIdx: codeSearch
+      });
+  });
+
   let jsx;
 
   if (results.length !== 0)
     jsx = (
       <>
         {results.map((x) =>
-          ResultEntry({ edgeList: x, onSearchClick: props.onSearchClick })
+          ResultEntry({
+            searchInfo: x,
+            onSearchClick: props.onSearchClick,
+            queryLength: props.query.length
+          })
         )}
       </>
     );
-  else jsx = <>{ResultEntry({ edgeList: null, onSearchClick: props.onSearchClick })}</>;
+  else
+    jsx = (
+      <>
+        {ResultEntry({
+          searchInfo: null,
+          onSearchClick: props.onSearchClick,
+          queryLength: props.query.length
+        })}
+      </>
+    );
 
   return <div className="search-bar__results">{jsx}</div>;
 }
 
 type resultEntryProps = {
-  edgeList: EdgeList | null;
+  searchInfo: { edgeList: EdgeList; nameIdx: number; codeIdx: number } | null;
   onSearchClick: (x: Point) => void;
+  queryLength: number;
 };
 
 function ResultEntry(props: resultEntryProps) {
@@ -81,15 +107,51 @@ function ResultEntry(props: resultEntryProps) {
     <div
       className="search-bar__result noselect"
       onClick={() => {
-        if (props.edgeList) props.onSearchClick(props.edgeList.position);
+        if (props.searchInfo) props.onSearchClick(props.searchInfo.edgeList.position);
       }}
     >
-      <hr className="search-bar__result__break" />
+      {/* <hr className="search-bar__result__break" /> */}
       <span className="search-bar__result__title">
-        {props.edgeList ? props.edgeList.node.name : "No results"}
+        {props.searchInfo ? (
+          props.searchInfo.nameIdx !== -1 ? (
+            <>
+              {props.searchInfo.edgeList.node.name.slice(0, props.searchInfo.nameIdx)}
+              <mark>
+                {props.searchInfo.edgeList.node.name.slice(
+                  props.searchInfo.nameIdx,
+                  props.searchInfo.nameIdx + props.queryLength
+                )}
+              </mark>
+              {props.searchInfo.edgeList.node.name.slice(
+                props.searchInfo.nameIdx + props.queryLength
+              )}
+            </>
+          ) : (
+            props.searchInfo.edgeList.node.name
+          )
+        ) : (
+          "No results"
+        )}
       </span>
       <br />
-      {props.edgeList && !isMajor(props.edgeList.node) && props.edgeList.node.code}
+      {props.searchInfo &&
+        !isMajor(props.searchInfo.edgeList.node) &&
+        (props.searchInfo.codeIdx !== -1 ? (
+          <>
+            {props.searchInfo.edgeList.node.code.slice(0, props.searchInfo.codeIdx)}
+            <mark>
+              {props.searchInfo.edgeList.node.code.slice(
+                props.searchInfo.codeIdx,
+                props.searchInfo.codeIdx + props.queryLength
+              )}
+            </mark>
+            {props.searchInfo.edgeList.node.code.slice(
+              props.searchInfo.codeIdx + props.queryLength
+            )}
+          </>
+        ) : (
+          props.searchInfo.edgeList.node.code
+        ))}
     </div>
   );
 }

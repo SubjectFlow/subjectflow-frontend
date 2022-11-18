@@ -6,6 +6,7 @@
 }
 
 .app__header {
+  position: absolute;
   text-align: left;
   font-family: "Cormorant Garamond";
   font-size: 18pt;
