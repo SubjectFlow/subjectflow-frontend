@@ -5,7 +5,10 @@ import { ReactComponent as SearchIcon } from "../icons/search.svg";
 import { Point } from "../utils/Point";
 import { isMajor } from "../Types";
 
-type searchBarProps = { adjList: EdgeList[]; onSearchClick: (x: Point) => void };
+type searchBarProps = {
+  adjList: EdgeList[];
+  onSearchClick: (x: Point, id: number) => void;
+};
 
 function SearchBar(props: searchBarProps) {
   const [resultsVisible, setResultsVisible] = useState(false);
@@ -47,13 +50,13 @@ function SearchBar(props: searchBarProps) {
 type resultsPanelProps = {
   query: string;
   adjList: EdgeList[];
-  onSearchClick: (x: Point) => void;
+  onSearchClick: (x: Point, id: number) => void;
 };
 
 function ResultsPanel(props: resultsPanelProps) {
-  const results: { edgeList: EdgeList; nameIdx: number; codeIdx: number }[] = [];
+  const results: searchInfo[] = [];
 
-  props.adjList.forEach((x) => {
+  props.adjList.forEach((x, idx) => {
     let nameSearch = x.node.name.search(new RegExp(`${props.query}`, "i"));
     let codeSearch = -1;
     if (!isMajor(x.node)) {
@@ -63,6 +66,7 @@ function ResultsPanel(props: resultsPanelProps) {
     if (nameSearch !== -1 || codeSearch !== -1)
       results.push({
         edgeList: x,
+        edgeListID: idx,
         nameIdx: nameSearch,
         codeIdx: codeSearch
       });
@@ -96,18 +100,30 @@ function ResultsPanel(props: resultsPanelProps) {
   return <div className="search-bar__results">{jsx}</div>;
 }
 
+type searchInfo = {
+  edgeList: EdgeList;
+  nameIdx: number;
+  codeIdx: number;
+  edgeListID: number;
+} | null;
+
 type resultEntryProps = {
-  searchInfo: { edgeList: EdgeList; nameIdx: number; codeIdx: number } | null;
-  onSearchClick: (x: Point) => void;
+  searchInfo: searchInfo;
+  onSearchClick: (x: Point, id: number) => void;
   queryLength: number;
 };
 
 function ResultEntry(props: resultEntryProps) {
   return (
     <div
+      key={props.searchInfo ? props.searchInfo.edgeListID : null}
       className="search-bar__result noselect"
       onClick={() => {
-        if (props.searchInfo) props.onSearchClick(props.searchInfo.edgeList.position);
+        if (props.searchInfo)
+          props.onSearchClick(
+            props.searchInfo.edgeList.position,
+            props.searchInfo.edgeListID
+          );
       }}
     >
       {/* <hr className="search-bar__result__break" /> */}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Tree } from "./Tree";
 import { Point } from "../utils/Point";
 import "../styles/TreeCanvas.css";
@@ -15,8 +15,40 @@ function TreeCanvas() {
   const [originalDisp, setOriginalDisp] = useState(new Point(0, 0));
 
   const { loaded, adjList } = useNodeSystem();
+  const [visible, setVisible] = useState(Array(adjList.length).fill(true));
   const TARGET_LERP_DELAY = 0.02;
   const TARGET_LERP_STEPS = 40;
+
+  const dfsVisibility = (
+    idx: number,
+    outgoing: boolean,
+    visited: boolean[],
+    newVisible: boolean[]
+  ) => {
+    if (visited[idx]) return;
+    visited[idx] = true;
+    newVisible[idx] = true;
+    if (outgoing) {
+      adjList[idx].outgoingEdges.forEach((x) =>
+        dfsVisibility(x, true, visited, newVisible)
+      );
+    } else {
+      adjList[idx].incomingEdges.forEach((x) =>
+        dfsVisibility(x, false, visited, newVisible)
+      );
+    }
+  };
+
+  useEffect(() => {
+    setVisible(Array(adjList.length).fill(true));
+  }, [adjList.length]);
+
+  const onNodeClick = (edgeListID: number) => {
+    let newVisible = Array(visible.length).fill(false);
+    dfsVisibility(edgeListID, true, Array(visible.length).fill(false), newVisible);
+    dfsVisibility(edgeListID, false, Array(visible.length).fill(false), newVisible);
+    setVisible(newVisible);
+  };
 
   const onMouseDown = (e: React.MouseEvent) => {
     if (e.button !== 0) return;
@@ -54,7 +86,7 @@ function TreeCanvas() {
     setDragging(false);
   };
 
-  const onSearchClick = (pos: Point) => {
+  const onSearchClick = (pos: Point, edgeListID: number) => {
     setTargetDir(
       pos
         .flip()
@@ -63,6 +95,7 @@ function TreeCanvas() {
     );
     setOriginalDisp(disp);
     setTargetSteps(TARGET_LERP_STEPS);
+    onNodeClick(edgeListID);
   };
 
   return (
@@ -73,7 +106,14 @@ function TreeCanvas() {
       onMouseUp={(e) => onMouseUp(e)}
     >
       {loaded && <SearchBar adjList={adjList} onSearchClick={onSearchClick} />}
-      {loaded && <Tree disp={disp} adjList={adjList} />}
+      {loaded && (
+        <Tree
+          disp={disp}
+          adjList={adjList}
+          visible={visible}
+          onNodeClick={onNodeClick}
+        />
+      )}
     </div>
   );
 }

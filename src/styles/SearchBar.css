@@ -43,7 +43,7 @@
   transform: translateY(100%);
   box-sizing: border-box;
   width: var(--search-width);
-  border-radius: 0 0 3px 3px;
+  border-radius: var(--search-rounding);
 }
 
 .search-bar__result {
@@ -51,6 +51,10 @@
   font-size: var(--search-input-font-size);
   padding: 8px var(--search-input-right-padding) 8px var(--search-input-right-padding);
   background-color: white;
+}
+
+.search-bar__result:last-child {
+  border-radius: 0 0 var(--search-rounding) var(--search-rounding);
 }
 
 .search-bar__result:hover {
