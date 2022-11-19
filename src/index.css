@@ -20,6 +20,10 @@ html {
   overflow: hidden;
 }
 
+mark {
+  background-color: orange;
+}
+
 #root {
   height: 100%;
 }

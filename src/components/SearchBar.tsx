@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { EdgeList } from "../hooks/useNodeSystem";
 import "../styles/SearchBar.css";
 import { ReactComponent as SearchIcon } from "../icons/search.svg";
 import { Point } from "../utils/Point";
 import { isMajor } from "../Types";
+import { useOutsideEventListener } from "../hooks/useOutsideEventListener";
 
 type searchBarProps = {
   adjList: EdgeList[];
@@ -13,6 +14,11 @@ type searchBarProps = {
 function SearchBar(props: searchBarProps) {
   const [resultsVisible, setResultsVisible] = useState(false);
   const [text, setText] = useState("");
+  const searchBarRef = useRef<HTMLDivElement>(null);
+
+  useOutsideEventListener(searchBarRef, (e: Event) => {
+    setResultsVisible(false);
+  })
 
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     setText(e.target.value);
@@ -30,8 +36,12 @@ function SearchBar(props: searchBarProps) {
     }
   }
 
-  function onBlur() {
-    setResultsVisible(false);
+  function onBlur(e: React.FocusEvent<HTMLInputElement, Element>) {
+    console.log(e.currentTarget.parentElement);
+    console.log(e.relatedTarget)
+    if(e.currentTarget.parentElement && !e.currentTarget.parentElement.contains(e.relatedTarget)) {
+      setResultsVisible(false);
+    }
   }
 
   function onFocus() {
@@ -43,13 +53,14 @@ function SearchBar(props: searchBarProps) {
   return (
     <div
       className={"search-bar" + (resultsVisible ? " search-bar--results-active" : "")}
+      ref={searchBarRef}
     >
       <input
         className="search-bar__input noselect"
         placeholder="Search"
         onKeyDown={(e) => onKeyDown(e)}
         onMouseDown={(e) => e.stopPropagation()}
-        onBlur={() => onBlur()}
+        onBlur={(e) => onBlur(e)}
         onFocus={() => onFocus()}
         onChange={(e) => onChange(e)}
         draggable={false}
@@ -136,6 +147,7 @@ function ResultEntry(props: resultEntryProps) {
   return (
     <div
       key={props.searchInfo ? props.searchInfo.edgeListID : null}
+      tabIndex={0}
       className="search-bar__result noselect"
       onClick={() => {
         if (props.searchInfo)
