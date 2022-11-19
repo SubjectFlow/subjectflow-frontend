@@ -24,6 +24,22 @@ function SearchBar(props: searchBarProps) {
     }
   }
 
+  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "Escape") {
+      e.currentTarget.blur();
+    }
+  }
+
+  function onBlur() {
+    setResultsVisible(false);
+  }
+
+  function onFocus() {
+    if (text !== "") {
+      setResultsVisible(true);
+    }
+  }
+
   return (
     <div
       className={"search-bar" + (resultsVisible ? " search-bar--results-active" : "")}
@@ -31,7 +47,10 @@ function SearchBar(props: searchBarProps) {
       <input
         className="search-bar__input noselect"
         placeholder="Search"
+        onKeyDown={(e) => onKeyDown(e)}
         onMouseDown={(e) => e.stopPropagation()}
+        onBlur={() => onBlur()}
+        onFocus={() => onFocus()}
         onChange={(e) => onChange(e)}
         draggable={false}
       />
